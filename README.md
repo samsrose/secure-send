@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Secure Share
 
-## Getting Started
+Password-protected secret sharing built with **Next.js**, **shadcn/ui**, and **Upstash Redis** (Vercel-compatible NoSQL).
 
-First, run the development server:
+## Features
+
+- **Share tab**: textarea for secrets, auto-generated 8-character password, one-click secure link
+- **Decrypt tab**: share ID + password to reveal ciphertext
+- **Direct links**: `/s/{id}` opens the decrypt flow for a specific share
+- **Client-side encryption**: AES-256-GCM with PBKDF2; the server only stores ciphertext
+- **TTL**: shares expire after 7 days by default (configurable)
+
+## Local development
 
 ```bash
+npm install
+cp .env.example .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Without Upstash credentials, shares are stored in **this browser's localStorage** (local dev only). Links only work in the same browser where the secret was created. Add Upstash Redis for production.
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Push this repository to GitHub and import it in [Vercel](https://vercel.com/new).
+2. Add **Upstash Redis** from the Vercel Marketplace (Storage).
+3. Vercel injects `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` automatically.
+4. Set `NEXT_PUBLIC_APP_URL` to your production domain (e.g. `https://secure-share.example.com`).
+5. Deploy.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## API
+
+| Method | Path | Description |
+|--------|------|-------------|
+| `POST` | `/api/shares` | Store encrypted payload, returns `{ id, url, expiresAt }` |
+| `GET` | `/api/shares/[id]` | Fetch encrypted payload for client-side decryption |
+
+## Security notes
+
+- Plaintext and passwords never leave the browser unencrypted.
+- Use HTTPS in production.
+- Share the password through a separate channel from the link.
+- Rotate or shorten `SHARE_TTL_SECONDS` for more sensitive data.

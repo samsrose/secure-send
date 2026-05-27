@@ -1,0 +1,35 @@
+2026-05-26 — Initial Secure Share application
+
+- Scaffolded Next.js 16 App Router project with TypeScript and Tailwind CSS v4
+- Initialized shadcn/ui (button, textarea, input, label, card, tabs, badge, separator, sonner)
+- Added client-side AES-256-GCM encryption with PBKDF2 key derivation (src/lib/crypto.ts)
+- Added 8-character password generator (src/lib/password.ts)
+- Integrated Upstash Redis storage with in-memory fallback for local dev (src/lib/redis.ts)
+- Created API routes: POST /api/shares, GET /api/shares/[id]
+- Built Share and Decrypt tabs on home page (src/components/secure-share-shell.tsx)
+- Added per-share decrypt page at /s/[id]
+- Added README.md, .env.example, and prompt.txt
+
+2026-05-26 — Local dev uses localStorage instead of in-memory server store
+
+- When Upstash is not configured, shares persist in browser localStorage via share-client.ts
+- Removed server in-memory Map fallback from redis.ts
+- Added GET /api/shares/storage to expose redis vs localStorage mode
+- Create/decrypt forms route through share-client for unified storage handling
+
+2026-05-26 — Default dark color scheme
+
+- Swapped :root CSS tokens to dark palette; kept .light as optional override
+- Added dark class and ThemeProvider (forcedTheme dark) on root layout
+- Toasts use dark theme via next-themes
+
+2026-05-26 — Google Sans typography
+
+- Replaced Geist with Google Sans and Google Sans Code via next/font/google
+- Mapped Tailwind font-sans and font-mono to Google Sans CSS variables
+
+2026-05-26 — Page load fade-in-up animation
+
+- Added fade-in-up keyframes (300ms duration, 300ms delay, ease-out)
+- page-load-fade utility animates all direct children on home, decrypt, and form cards
+- Respects prefers-reduced-motion
