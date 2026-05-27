@@ -146,6 +146,9 @@
   }
   body {
     @apply bg-background text-foreground;
+    border: 5px solid #6ee7b7;
+    box-sizing: border-box;
+    min-height: 100%;
   }
   html {
     @apply font-sans;

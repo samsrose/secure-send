@@ -40,3 +40,7 @@
 - Postgres store with Redis legacy fallback; localStorage when no server env vars
 - npm run db:migrate applies schema; DATABASE_URL / POSTGRES_URL supported
 - Updated README and .env.example for Neon / Vercel Postgres deployment
+
+2026-05-26 — Mint green body border
+
+- Added 5px solid #6ee7b7 border on body in globals.css
