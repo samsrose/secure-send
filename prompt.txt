@@ -3,9 +3,9 @@ Build a Vercel-compatible Next.js app with shadcn/ui for secure secret sharing.
 Requirements:
 - Share UI: textarea input, action button, auto-generated 8-character password, custom share link
 - Decrypt UI: share ID text input and password field to reveal encrypted text
-- Encrypt secrets client-side; store only ciphertext in a NoSQL database (Upstash Redis on Vercel)
+- Encrypt secrets client-side; store only ciphertext in PostgreSQL in production (Neon / Vercel Postgres)
 - Decrypt flow loads ciphertext from the API and decrypts in the browser with the password
-- Production-ready for Vercel deployment with environment variable documentation
+- Production-ready for Vercel deployment with DATABASE_URL and db:migrate
 - Local dev without Redis: persist encrypted shares in browser localStorage (same-browser only)
 - UI uses a dark color scheme by default
 - Typography: Google Sans (body) and Google Sans Code (monospace fields)

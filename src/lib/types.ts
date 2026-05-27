@@ -1,4 +1,4 @@
-export type ShareStorageMode = "redis" | "localStorage";
+export type ShareStorageMode = "postgres" | "redis" | "localStorage";
 
 export interface EncryptedPayload {
   ciphertext: string;

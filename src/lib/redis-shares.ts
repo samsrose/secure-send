@@ -16,9 +16,7 @@ function getRedis(): Redis {
   return new Redis({ url, token });
 }
 
-export { getShareTtlSeconds } from "@/lib/share-ttl";
-
-export async function saveShare(
+export async function saveShareRedis(
   id: string,
   record: ShareRecord,
 ): Promise<void> {
@@ -27,7 +25,7 @@ export async function saveShare(
   await redis.set(`${SHARE_PREFIX}${id}`, record, { ex: ttlSeconds });
 }
 
-export async function getShare(id: string): Promise<ShareRecord | null> {
+export async function getShareRedis(id: string): Promise<ShareRecord | null> {
   const redis = getRedis();
   const record = await redis.get<ShareRecord>(`${SHARE_PREFIX}${id}`);
   return record ?? null;

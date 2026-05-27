@@ -1,4 +1,8 @@
-export type ShareStorageMode = "redis" | "localStorage";
+export type ShareStorageMode = "postgres" | "redis" | "localStorage";
+
+export function hasPostgresConfigured(): boolean {
+  return Boolean(process.env.DATABASE_URL ?? process.env.POSTGRES_URL);
+}
 
 export function hasRedisConfigured(): boolean {
   return Boolean(
@@ -7,5 +11,13 @@ export function hasRedisConfigured(): boolean {
 }
 
 export function getShareStorageMode(): ShareStorageMode {
-  return hasRedisConfigured() ? "redis" : "localStorage";
+  if (hasPostgresConfigured()) {
+    return "postgres";
+  }
+
+  if (hasRedisConfigured()) {
+    return "redis";
+  }
+
+  return "localStorage";
 }

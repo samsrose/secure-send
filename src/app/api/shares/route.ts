@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { getAppBaseUrl } from "@/lib/app-url";
-import { saveShare } from "@/lib/redis";
+import { saveShare } from "@/lib/shares-store";
 import { newShareId } from "@/lib/share-id";
 import { getShareTtlSeconds } from "@/lib/share-ttl";
 import { getShareStorageMode } from "@/lib/storage-mode";
@@ -72,6 +72,6 @@ export async function POST(request: Request) {
     id,
     url: `${baseUrl}/s/${id}`,
     expiresAt: record.expiresAt,
-    storage: "redis",
+    storage: getShareStorageMode(),
   });
 }

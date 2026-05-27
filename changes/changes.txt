@@ -33,3 +33,10 @@
 - Added fade-in-up keyframes (300ms duration, 300ms delay, ease-out)
 - page-load-fade utility animates all direct children on home, decrypt, and form cards
 - Respects prefers-reduced-motion
+
+2026-05-26 — PostgreSQL storage for production
+
+- Added @neondatabase/serverless and shares table schema (db/schema.sql)
+- Postgres store with Redis legacy fallback; localStorage when no server env vars
+- npm run db:migrate applies schema; DATABASE_URL / POSTGRES_URL supported
+- Updated README and .env.example for Neon / Vercel Postgres deployment

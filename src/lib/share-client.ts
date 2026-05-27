@@ -90,7 +90,7 @@ export async function createShare(
     id: data.id,
     url: data.url,
     expiresAt: data.expiresAt,
-    storage: "redis",
+    storage: data.storage ?? "postgres",
   };
 }
 

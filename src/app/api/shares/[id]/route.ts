@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { getShare } from "@/lib/redis";
+import { getShare } from "@/lib/shares-store";
 import { getShareStorageMode } from "@/lib/storage-mode";
 
 interface RouteContext {
